@@ -9,8 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "next": "15.3.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+<<<<<<< HEAD
     "next": "15.3.5",
     "socket.io-client": "^4.7.4",
     "zustand": "^4.4.7",
@@ -25,17 +27,24 @@
     "@supabase/supabase-js": "^2.38.4",
     "@stripe/stripe-js": "^2.4.0",
     "stripe": "^14.10.0"
+=======
+    "zustand": "^5.0.6"
+>>>>>>> da8b7b2114e71203c1c8b4bda8fda32937a5634a
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.3.5",
+<<<<<<< HEAD
     "@eslint/eslintrc": "^3",
     "@types/qrcode.react": "^1.0.5"
+=======
+    "tailwindcss": "^4",
+    "typescript": "^5"
+>>>>>>> da8b7b2114e71203c1c8b4bda8fda32937a5634a
   }
 }

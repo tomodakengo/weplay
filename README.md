@@ -1,4 +1,6 @@
-# WePlay - リアルタイム野球スコアボード共有アプリ
+# WePlay ⚾
+
+リアルタイム野球スコアボード共有アプリケーション
 
 ## 概要
 
@@ -6,33 +8,39 @@ WePlayは、草野球や青少年野球などのカジュアルな野球試合�
 
 ## 主な機能
 
-### 現在実装済み
-- [ ] プロジェクト基盤構築
-- [ ] 基本的なUI/UX設計
+### 実装済み機能
+- ✅ **試合作成・管理**: 試合の作成、チーム情報の設定
+- ✅ **試合一覧**: 進行中・終了した試合の一覧表示
+- ✅ **ユーザー認証**: JWT認証によるユーザー管理
+- ✅ **レスポンシブデザイン**: モバイル・タブレット・デスクトップ対応
+- ✅ **ファイルアップロード**: AWS S3を使用した画像・動画アップロード
+- ✅ **共通UIコンポーネント**: 再利用可能なUIコンポーネント
+- ✅ **状態管理**: Zustandによる効率的な状態管理
+- ✅ **型安全性**: TypeScriptによる型安全なコーディング
 
-### 予定機能
-- **リアルタイムスコアボード**: 試合のスコア、アウト数、ストライク数などをリアルタイム更新
-- **タイムライン表示**: スコア、写真、動画を時系列で表示
-- **簡単共有**: URL・QRコードで簡単に試合ページを共有
-- **ユーザー機能**: ログインによる写真投稿や応援メッセージの共有
-- **カジュアルUI**: 気軽に使える直感的なインターフェース
+### 開発中の機能
+- 🚧 **リアルタイムスコアボード**: Socket.ioによるリアルタイム更新
+- 🚧 **投稿機能**: 写真・動画・応援メッセージの投稿
+- 🚧 **試合詳細ページ**: スコアボード表示とリアルタイム更新
 
-### 将来的な機能
-- **AIアドバイス**: 画像・動画解析による投球・打撃アドバイス
-- **マッチング機能**: 他チームとの試合マッチング
-- **コミュニティ機能**: 野球仲間募集
-- **支援募集**: 野球支援の募集機能
-- **スケジュール管理**: 試合スケジュール管理
+### 計画中の機能
+- 📋 **PWA対応**: オフライン対応とプッシュ通知
+- 📋 **統計機能**: 試合データの分析と統計表示
+- 📋 **チーム管理**: チーム作成・選手管理
+- 📋 **通知システム**: 重要な場面での通知機能
 
 ## 技術スタック
 
 ### フロントエンド
-- **React** / **Next.js**: モダンなWebアプリケーション構築
-- **TypeScript**: 型安全性の確保
-- **Tailwind CSS**: レスポンシブデザイン
-- **PWA対応**: iOS/Androidアプリとして利用可能
+- **React 18** - UIライブラリ
+- **Next.js 14** - フルスタックフレームワーク
+- **TypeScript** - 型安全性
+- **Tailwind CSS** - スタイリング
+- **Zustand** - 状態管理
+- **Socket.io Client** - リアルタイム通信
 
 ### バックエンド
+<<<<<<< HEAD
 - **Node.js** / **Express**: APIサーバー
 - **Socket.io**: リアルタイム通信
 - **Supabase**: データベース・ユーザー認証
@@ -43,30 +51,117 @@ WePlayは、草野球や青少年野球などのカジュアルな野球試合�
 - **Supabase**: データベース・認証・リアルタイム機能
 - **Stripe**: 課金システム
 - **Cloudflare**: CDN・DNS
+=======
+- **Node.js** - サーバーサイドランタイム
+- **Express.js** - Webアプリケーションフレームワーク
+- **TypeScript** - 型安全性
+- **Socket.io** - リアルタイム通信
+- **MongoDB** - データベース（Mongoose）
+- **JWT** - 認証システム
+- **AWS S3** - ファイルストレージ
+- **Express Validator** - バリデーション
+
+### インフラ・デプロイ
+- **Vercel** - フロントエンドデプロイ
+- **Railway** - バックエンドデプロイ
+- **MongoDB Atlas** - データベース
+- **AWS S3** - ファイルストレージ
+
+## アーキテクチャ
+
+### プロジェクト構造
+```
+weplay/
+├── frontend/          # Next.js フロントエンド
+│   ├── src/
+│   │   ├── app/       # App Router ページ
+│   │   │   ├── common/    # 共通コンポーネント
+│   │   │   └── forms/     # フォームコンポーネント
+│   │   └── lib/       # ライブラリ・ユーティリティ
+│   │       ├── stores/    # Zustand ストア
+│   │       ├── api.ts     # APIクライアント
+│   │       └── types.ts   # 型定義
+│   └── package.json
+├── backend/           # Express.js バックエンド
+│   ├── src/
+│   │   ├── controllers/ # コントローラー
+│   │   ├── models/      # データモデル
+│   │   ├── routes/      # ルート定義
+│   │   ├── middleware/  # ミドルウェア
+│   │   └── utils/       # ユーティリティ
+│   └── package.json
+├── shared/            # 共有型定義
+│   ├── src/
+│   │   └── types/
+│   └── package.json
+└── package.json       # モノレポ設定
+```
+
+### 主要コンポーネント設計
+
+#### 共通UIコンポーネント
+- **Header**: ナビゲーション、認証状態表示
+- **Layout**: ページ共通レイアウト
+- **Button**: 再利用可能なボタンコンポーネント
+- **Input**: フォーム入力フィールド
+- **ErrorMessage**: エラー表示コンポーネント
+
+#### 状態管理（Zustand）
+- **AuthStore**: ユーザー認証状態
+- **GameStore**: 試合データ・状態管理
+
+#### APIクライアント
+- 統一的なHTTPリクエスト処理
+- JWT認証トークン管理
+- エラーハンドリング
+>>>>>>> da8b7b2114e71203c1c8b4bda8fda32937a5634a
 
 ## 開発環境セットアップ
 
-### 前提条件
-- Node.js 18.0.0以上
+### 必要な環境
+- Node.js 18以上
 - npm または yarn
-- Git
+- MongoDB（開発用）
+- AWS S3（ファイルアップロード用）
 
 ### インストール手順
 
-```bash
-# リポジトリをクローン
-git clone https://github.com/your-username/weplay.git
-cd weplay
+1. **リポジトリクローン**
+   ```bash
+   git clone https://github.com/yourusername/weplay.git
+   cd weplay
+   ```
 
-# 依存関係をインストール
-npm install
+2. **依存関係インストール**
+   ```bash
+   npm install
+   ```
 
-# 開発サーバーを起動
-npm run dev
-```
+3. **環境変数設定**
+   ```bash
+   # バックエンド
+   cp backend/.env.example backend/.env
+   
+   # フロントエンド
+   cp frontend/.env.example frontend/.env
+   ```
 
-### 環境変数設定
+4. **環境変数の設定**
+   ```bash
+   # backend/.env
+   MONGODB_URI=mongodb://localhost:27017/weplay
+   JWT_SECRET=your-secret-key
+   AWS_ACCESS_KEY_ID=your-access-key
+   AWS_SECRET_ACCESS_KEY=your-secret-key
+   AWS_BUCKET_NAME=your-bucket-name
+   AWS_REGION=ap-northeast-1
+   PORT=3001
+   
+   # frontend/.env
+   NEXT_PUBLIC_API_URL=http://localhost:3001
+   ```
 
+<<<<<<< HEAD
 プロジェクトルートに`.env.local`ファイルを作成し、以下の環境変数を設定してください：
 
 ```env
@@ -104,26 +199,44 @@ CORS_ORIGIN=http://localhost:3000
 RATE_LIMIT_WINDOW_MS=900000 # 15分
 RATE_LIMIT_MAX_REQUESTS=100
 ```
+=======
+5. **開発サーバー起動**
+   ```bash
+   # バックエンド
+   cd backend
+   npm run dev
+   
+   # フロントエンド（別ターミナル）
+   cd frontend
+   npm run dev
+   ```
 
-## プロジェクト構造
+## 使用方法
 
-```
-weplay/
-├── frontend/                 # Next.jsフロントエンド
-│   ├── components/          # Reactコンポーネント
-│   ├── pages/              # ページコンポーネント
-│   ├── hooks/              # カスタムフック
-│   ├── utils/              # ユーティリティ関数
-│   └── styles/             # スタイルファイル
-├── backend/                # Express.jsバックエンド
-│   ├── routes/             # APIルート
-│   ├── models/             # データベースモデル
-│   ├── middleware/         # ミドルウェア
-│   └── services/           # ビジネスロジック
-├── shared/                 # 共有型定義・ユーティリティ
-└── docs/                   # ドキュメント
-```
+### 試合作成
+1. 「試合作成」ページでチーム情報を入力
+2. 試合タイトルと説明を設定
+3. 試合を作成すると、専用のスコアボードページが生成
 
+### スコア管理
+1. 試合ページでリアルタイムスコア更新
+2. イニング、アウト数、ボール・ストライクカウント管理
+3. 観戦者は投稿機能でコメント・写真を共有
+
+### 試合共有
+1. 試合URLを参加者に共有
+2. リアルタイムで同じスコアボードを表示
+3. 観戦者は誰でもアクセス可能
+>>>>>>> da8b7b2114e71203c1c8b4bda8fda32937a5634a
+
+## 貢献方法
+
+1. Issueを作成して機能要求やバグ報告
+2. フォークしてfeatureブランチを作成
+3. 変更をコミットしてプルリクエスト
+4. コードレビュー後にマージ
+
+<<<<<<< HEAD
 ## 開発ガイドライン
 
 ### コーディング規約
@@ -156,16 +269,45 @@ Vercelのダッシュボードで以下の環境変数を設定してくださ�
 - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
 - `STRIPE_SECRET_KEY`
 - `STRIPE_WEBHOOK_SECRET`
+=======
+### 開発ガイドライン
+- TypeScriptの型安全性を維持
+- ESLint + Prettierでコードフォーマット
+- コミットメッセージは日本語で明確に
+- 単体テストを追加（推奨）
+>>>>>>> da8b7b2114e71203c1c8b4bda8fda32937a5634a
 
 ## ライセンス
 
-MIT License
+MIT License - 詳細は [LICENSE](LICENSE) ファイルを参照
 
-## 貢献
+## 作者・メンテナー
 
-プルリクエストやイシューの報告を歓迎します。詳細は[CONTRIBUTING.md](./CONTRIBUTING.md)を参照してください。
+- メイン開発者: [Your Name]
+- 貢献者: [Contributors]
 
-## お問い合わせ
+## サポート・連絡先
 
-- プロジェクトに関する質問: [GitHub Issues](https://github.com/your-username/weplay/issues)
-- 機能要望・バグ報告: [GitHub Issues](https://github.com/your-username/weplay/issues) 
+- Issue: GitHub Issues
+- Email: your-email@example.com
+- Discord: [Discord Server Link]
+
+## 更新履歴
+
+### v0.2.0 (2024-01-XX) - リファクタリング完了
+- 共通UIコンポーネント導入
+- Zustandによる状態管理
+- 統一的なAPIクライアント
+- TypeScript型安全性向上
+- バックエンドレスポンス・バリデーション統一
+
+### v0.1.0 (2024-01-XX) - 初期リリース
+- 基本的なプロジェクト構造
+- 認証システム実装
+- 試合作成・一覧機能
+- レスポンシブデザイン
+- AWS S3ファイルアップロード
+
+---
+
+⚾ **WePlayで野球をもっと楽しく、もっと繋がろう！** 

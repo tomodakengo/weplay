@@ -1,8 +1,14 @@
 {
   "compilerOptions": {
     "target": "ES2020",
+<<<<<<< HEAD
     "module": "commonjs",
     "lib": ["ES2020"],
+=======
+    "lib": ["ES2020"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+>>>>>>> da8b7b2114e71203c1c8b4bda8fda32937a5634a
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
@@ -13,6 +19,7 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
+<<<<<<< HEAD
     "removeComments": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
@@ -28,6 +35,16 @@
       "@/*": ["*"],
       "@/types/*": ["types/*"],
       "@/utils/*": ["utils/*"]
+=======
+    "removeComments": false,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./src/*"]
+>>>>>>> da8b7b2114e71203c1c8b4bda8fda32937a5634a
     }
   },
   "include": [
@@ -39,4 +56,8 @@
     "**/*.test.ts",
     "**/*.spec.ts"
   ]
+<<<<<<< HEAD
 } 
+=======
+}
+>>>>>>> da8b7b2114e71203c1c8b4bda8fda32937a5634a

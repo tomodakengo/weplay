@@ -1,8 +1,14 @@
 {
   "compilerOptions": {
     "target": "ES2020",
+<<<<<<< HEAD
     "module": "commonjs",
     "lib": ["ES2020"],
+=======
+    "lib": ["ES2020"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+>>>>>>> da8b7b2114e71203c1c8b4bda8fda32937a5634a
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
@@ -16,6 +22,7 @@
     "removeComments": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
+<<<<<<< HEAD
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -32,6 +39,16 @@
       "@/routes/*": ["routes/*"],
       "@/models/*": ["models/*"],
       "@/services/*": ["services/*"]
+=======
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "baseUrl": "./",
+    "paths": {
+      "@shared/*": ["../shared/src/*"],
+      "@/*": ["./src/*"]
+>>>>>>> da8b7b2114e71203c1c8b4bda8fda32937a5634a
     }
   },
   "include": [
@@ -42,5 +59,16 @@
     "dist",
     "**/*.test.ts",
     "**/*.spec.ts"
+<<<<<<< HEAD
   ]
 } 
+=======
+  ],
+  "ts-node": {
+    "esm": false,
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  }
+}
+>>>>>>> da8b7b2114e71203c1c8b4bda8fda32937a5634a

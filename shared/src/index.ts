@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // 共有ライブラリのエントリーポイント
 
 export * from './types';
@@ -65,3 +66,16 @@ export const ERROR_MESSAGES = {
   NOT_FOUND: 'リソースが見つかりません',
   SERVER_ERROR: 'サーバーエラーが発生しました'
 } as const; 
+=======
+// 型定義をエクスポート
+export * from './types';
+
+// ユーティリティ関数（将来的に追加予定）
+export const formatDate = (date: Date): string => {
+  return date.toLocaleDateString('ja-JP');
+};
+
+export const formatTime = (date: Date): string => {
+  return date.toLocaleTimeString('ja-JP');
+};
+>>>>>>> da8b7b2114e71203c1c8b4bda8fda32937a5634a
