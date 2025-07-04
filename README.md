@@ -35,12 +35,13 @@ WePlayは、草野球や青少年野球などのカジュアルな野球試合�
 ### バックエンド
 - **Node.js** / **Express**: APIサーバー
 - **Socket.io**: リアルタイム通信
-- **MongoDB**: データベース
+- **Supabase**: データベース・ユーザー認証
 - **AWS S3**: 画像・動画ストレージ
 
-### インフラ
-- **Vercel**: フロントエンドデプロイ
-- **Railway**: バックエンドデプロイ
+### インフラ・サービス
+- **Vercel**: フロントエンド・バックエンドデプロイ
+- **Supabase**: データベース・認証・リアルタイム機能
+- **Stripe**: 課金システム
 - **Cloudflare**: CDN・DNS
 
 ## 開発環境セットアップ
@@ -78,12 +79,15 @@ PORT=3001
 NODE_ENV=development
 FRONTEND_URL=http://localhost:3000
 
-# データベース設定
-MONGODB_URI=mongodb://localhost:27017/weplay
+# Supabase設定
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
 
-# JWT設定
-JWT_SECRET=your-super-secret-jwt-key-change-in-production
-JWT_EXPIRES_IN=7d
+# Stripe設定
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
+STRIPE_SECRET_KEY=your_stripe_secret_key
+STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
 
 # AWS S3設定（後で設定）
 AWS_ACCESS_KEY_ID=your_aws_access_key
@@ -136,17 +140,22 @@ weplay/
 
 ## デプロイ
 
-### フロントエンド（Vercel）
+### Vercelデプロイ
 ```bash
+# フロントエンド・バックエンド両方をVercelにデプロイ
 npm run build
-npm run deploy
+vercel --prod
 ```
 
-### バックエンド（Railway）
-```bash
-railway login
-railway up
-```
+### 環境変数の設定
+Vercelのダッシュボードで以下の環境変数を設定してください：
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
+- `STRIPE_SECRET_KEY`
+- `STRIPE_WEBHOOK_SECRET`
 
 ## ライセンス
 
