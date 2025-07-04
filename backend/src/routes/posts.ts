@@ -1,10 +1,13 @@
 import { Router } from 'express';
 import { Request, Response } from 'express';
+import { authenticateToken, optionalAuth } from '../middleware/auth';
+import { uploadLimiter } from '../middleware/rateLimiter';
+import { uploadSingle } from '../utils/upload';
 
 const router = Router();
 
 // 投稿一覧取得（ゲーム別）
-router.get('/game/:gameId', (req: Request, res: Response) => {
+router.get('/game/:gameId', optionalAuth, (req: Request, res: Response) => {
   const { gameId } = req.params;
   // TODO: 実際のデータベースから投稿一覧を取得
   res.json({
@@ -15,7 +18,7 @@ router.get('/game/:gameId', (req: Request, res: Response) => {
 });
 
 // 投稿詳細取得
-router.get('/:id', (req: Request, res: Response) => {
+router.get('/:id', optionalAuth, (req: Request, res: Response) => {
   const { id } = req.params;
   // TODO: 実際のデータベースから投稿詳細を取得
   res.json({
@@ -26,7 +29,7 @@ router.get('/:id', (req: Request, res: Response) => {
 });
 
 // 投稿作成（テキスト）
-router.post('/', (req: Request, res: Response) => {
+router.post('/', authenticateToken, (req: Request, res: Response) => {
   // TODO: 実際のデータベースに投稿を作成
   res.status(201).json({
     success: true,
@@ -36,7 +39,7 @@ router.post('/', (req: Request, res: Response) => {
 });
 
 // 投稿作成（画像・動画）
-router.post('/media', (req: Request, res: Response) => {
+router.post('/media', authenticateToken, uploadLimiter, uploadSingle, (req: Request, res: Response) => {
   // TODO: ファイルアップロード処理とデータベース保存
   res.status(201).json({
     success: true,
@@ -46,7 +49,7 @@ router.post('/media', (req: Request, res: Response) => {
 });
 
 // 投稿更新
-router.put('/:id', (req: Request, res: Response) => {
+router.put('/:id', authenticateToken, (req: Request, res: Response) => {
   const { id } = req.params;
   // TODO: 実際のデータベースで投稿を更新
   res.json({
@@ -57,7 +60,7 @@ router.put('/:id', (req: Request, res: Response) => {
 });
 
 // 投稿削除
-router.delete('/:id', (req: Request, res: Response) => {
+router.delete('/:id', authenticateToken, (req: Request, res: Response) => {
   const { id } = req.params;
   // TODO: 実際のデータベースから投稿を削除
   res.json({

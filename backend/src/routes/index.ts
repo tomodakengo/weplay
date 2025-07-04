@@ -2,6 +2,7 @@ import { Router } from 'express';
 import gameRoutes from './games';
 import userRoutes from './users';
 import postRoutes from './posts';
+import uploadRoutes from './upload';
 
 const router = Router();
 
@@ -9,6 +10,7 @@ const router = Router();
 router.use('/api/v1/games', gameRoutes);
 router.use('/api/v1/users', userRoutes);
 router.use('/api/v1/posts', postRoutes);
+router.use('/api/v1/upload', uploadRoutes);
 
 // ヘルスチェック
 router.get('/health', (req, res) => {
