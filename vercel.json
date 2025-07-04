@@ -1,0 +1,34 @@
+{
+  "buildCommand": "npm run build:frontend",
+  "outputDirectory": "frontend/.next",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "regions": ["nrt1"],
+  "functions": {
+    "frontend/src/app/**/*": {
+      "maxDuration": 10
+    }
+  },
+  "env": {
+    "NEXT_PUBLIC_API_URL": "@next_public_api_url",
+    "NEXT_PUBLIC_SOCKET_URL": "@next_public_socket_url",
+    "NEXT_PUBLIC_APP_ENV": "@next_public_app_env"
+  },
+  "build": {
+    "env": {
+      "NEXT_PUBLIC_API_URL": "@next_public_api_url",
+      "NEXT_PUBLIC_SOCKET_URL": "@next_public_socket_url",
+      "NEXT_PUBLIC_APP_ENV": "@next_public_app_env"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/socket.io/(.*)",
+      "destination": "$BACKEND_URL/socket.io/$1"
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": "$BACKEND_URL/api/$1"
+    }
+  ]
+}
