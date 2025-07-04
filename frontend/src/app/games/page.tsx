@@ -1,54 +1,29 @@
+'use client';
+
+import { useEffect } from 'react';
 import Link from 'next/link';
+import Layout from '../../components/common/Layout';
+import Button from '../../components/common/Button';
+import { useGameStore } from '../../lib/stores/gameStore';
+import { GameStatus } from '../../lib/types';
 
 export default function GamesPage() {
-  // TODO: 実際のAPIからデータを取得
-  const games = [
-    {
-      id: '1',
-      title: '草野球リーグ 第1試合',
-      homeTeam: { name: 'チーム A' },
-      awayTeam: { name: 'チーム B' },
-      status: 'in_progress',
-      inning: 5,
-      isTopHalf: false,
-      homeScore: 3,
-      awayScore: 2,
-      createdAt: '2024-01-15T10:00:00Z'
-    },
-    {
-      id: '2',
-      title: '友達同士の練習試合',
-      homeTeam: { name: 'ホームチーム' },
-      awayTeam: { name: 'ビジターチーム' },
-      status: 'finished',
-      inning: 9,
-      isTopHalf: true,
-      homeScore: 7,
-      awayScore: 4,
-      createdAt: '2024-01-14T14:00:00Z'
-    },
-    {
-      id: '3',
-      title: '地区大会決勝',
-      homeTeam: { name: 'レッドイーグルス' },
-      awayTeam: { name: 'ブルーライオンズ' },
-      status: 'waiting',
-      inning: 1,
-      isTopHalf: true,
-      homeScore: 0,
-      awayScore: 0,
-      createdAt: '2024-01-16T09:00:00Z'
-    }
-  ];
+  const { games, isLoading, error, fetchGames } = useGameStore();
 
-  const getStatusBadge = (status: string) => {
+  useEffect(() => {
+    fetchGames();
+  }, [fetchGames]);
+
+  const getStatusBadge = (status: GameStatus) => {
     switch (status) {
-      case 'in_progress':
+      case GameStatus.IN_PROGRESS:
         return <span className="px-2 py-1 text-xs font-semibold bg-green-100 text-green-800 rounded-full">進行中</span>;
-      case 'finished':
+      case GameStatus.FINISHED:
         return <span className="px-2 py-1 text-xs font-semibold bg-gray-100 text-gray-800 rounded-full">終了</span>;
-      case 'waiting':
+      case GameStatus.WAITING:
         return <span className="px-2 py-1 text-xs font-semibold bg-yellow-100 text-yellow-800 rounded-full">待機中</span>;
+      case GameStatus.SUSPENDED:
+        return <span className="px-2 py-1 text-xs font-semibold bg-red-100 text-red-800 rounded-full">中断</span>;
       default:
         return <span className="px-2 py-1 text-xs font-semibold bg-gray-100 text-gray-800 rounded-full">{status}</span>;
     }
@@ -64,67 +39,53 @@ export default function GamesPage() {
     });
   };
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold text-gray-900">
-                WePlay
-              </Link>
-              <nav className="ml-10 flex space-x-8">
-                <Link href="/games" className="text-green-600 font-medium">
-                  試合一覧
-                </Link>
-                <Link href="/create" className="text-gray-700 hover:text-green-600 transition-colors">
-                  試合作成
-                </Link>
-              </nav>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Link href="/login" className="text-gray-700 hover:text-green-600 transition-colors">
-                ログイン
-              </Link>
-              <Link href="/register" className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors">
-                新規登録
-              </Link>
-            </div>
+  if (isLoading) {
+    return (
+      <Layout currentPage="games">
+        <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-green-600"></div>
           </div>
         </div>
-      </header>
+      </Layout>
+    );
+  }
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+  if (error) {
+    return (
+      <Layout currentPage="games">
+        <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+          <div className="text-center py-12">
+            <div className="text-red-600 mb-4">{error}</div>
+            <Button onClick={fetchGames}>再試行</Button>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+
+  return (
+    <Layout currentPage="games">
+      <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-3xl font-bold text-gray-900">試合一覧</h1>
-            <Link
-              href="/create"
-              className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors flex items-center"
-            >
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-              </svg>
-              新しい試合を作成
+            <Link href="/create">
+              <Button>
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+                新しい試合を作成
+              </Button>
             </Link>
           </div>
 
           {/* Filters */}
           <div className="mb-6 flex space-x-4">
-            <button className="px-4 py-2 bg-green-600 text-white rounded-md text-sm font-medium">
-              すべて
-            </button>
-            <button className="px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-md text-sm font-medium hover:bg-gray-50">
-              進行中
-            </button>
-            <button className="px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-md text-sm font-medium hover:bg-gray-50">
-              終了
-            </button>
-            <button className="px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-md text-sm font-medium hover:bg-gray-50">
-              待機中
-            </button>
+            <Button size="sm">すべて</Button>
+            <Button variant="outline" size="sm">進行中</Button>
+            <Button variant="outline" size="sm">終了</Button>
+            <Button variant="outline" size="sm">待機中</Button>
           </div>
 
           {/* Games Grid */}
@@ -148,7 +109,7 @@ export default function GamesPage() {
                           </div>
                           <div className="text-center">
                             <div className="text-xs text-gray-500">VS</div>
-                            {game.status === 'in_progress' && (
+                            {game.status === GameStatus.IN_PROGRESS && (
                               <div className="text-xs text-gray-500">
                                 {game.inning}回{game.isTopHalf ? '表' : '裏'}
                               </div>
@@ -163,7 +124,7 @@ export default function GamesPage() {
 
                       {/* Game Info */}
                       <div className="flex justify-between items-center text-sm text-gray-500">
-                        <span>{formatDate(game.createdAt)}</span>
+                        <span>{formatDate(game.createdAt.toString())}</span>
                         <span className="flex items-center">
                           <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -187,20 +148,19 @@ export default function GamesPage() {
               <h3 className="mt-2 text-sm font-medium text-gray-900">試合がありません</h3>
               <p className="mt-1 text-sm text-gray-500">新しい試合を作成して開始しましょう。</p>
               <div className="mt-6">
-                <Link
-                  href="/create"
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700"
-                >
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                  </svg>
-                  新しい試合を作成
+                <Link href="/create">
+                  <Button>
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    </svg>
+                    新しい試合を作成
+                  </Button>
                 </Link>
               </div>
             </div>
           )}
         </div>
-      </main>
-    </div>
+      </div>
+    </Layout>
   );
 }
