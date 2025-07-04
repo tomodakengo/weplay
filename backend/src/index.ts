@@ -8,6 +8,7 @@ import dotenv from 'dotenv';
 import routes from './routes';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 import { generalLimiter } from './middleware/rateLimiter';
+import { connectDatabase } from './utils/database';
 
 // 環境変数を読み込み
 dotenv.config();
@@ -81,9 +82,22 @@ io.on('connection', (socket) => {
 });
 
 // サーバー起動
-httpServer.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-});
+const startServer = async () => {
+  try {
+    // MongoDB接続
+    await connectDatabase();
+    
+    // サーバー起動
+    httpServer.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+      console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+    });
+  } catch (error) {
+    console.error('Server startup error:', error);
+    process.exit(1);
+  }
+};
+
+startServer();
 
 export default app;
