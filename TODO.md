@@ -5,28 +5,28 @@
 ### Phase 1: 初期セットアップ
 - [x] README.md作成
 - [x] TODO.md作成
-- [ ] プロジェクト構造設計
-- [ ] Next.jsプロジェクト初期化
-- [ ] TypeScript設定
-- [ ] Tailwind CSS設定
-- [ ] ESLint + Prettier設定
-- [ ] 基本的なディレクトリ構造作成
+- [x] プロジェクト構造設計
+- [x] Next.jsプロジェクト初期化
+- [x] TypeScript設定
+- [x] Tailwind CSS設定
+- [x] ESLint + Prettier設定
+- [x] 基本的なディレクトリ構造作成
 
 ### Phase 2: バックエンド基盤
-- [ ] Express.jsサーバー構築
+- [x] Express.jsサーバー構築
 - [ ] MongoDB接続設定
-- [ ] Socket.io設定
-- [ ] 基本的なAPIエンドポイント作成
+- [x] Socket.io設定
+- [x] 基本的なAPIエンドポイント作成
 - [ ] 認証システム（JWT）実装
 - [ ] ファイルアップロード機能（AWS S3）
 
 ### Phase 3: フロントエンド基盤
-- [ ] 基本的なページ構造作成
-- [ ] レスポンシブデザイン実装
-- [ ] ルーティング設定
+- [x] 基本的なページ構造作成
+- [x] レスポンシブデザイン実装
+- [x] ルーティング設定
 - [ ] 状態管理（Zustand/Redux）設定
 - [ ] APIクライアント設定
-- [ ] PWA設定
+- [x] PWA設定
 
 ## 🏟️ コア機能実装
 

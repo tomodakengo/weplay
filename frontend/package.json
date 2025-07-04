@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "weplay-frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,7 +11,17 @@
   "dependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next": "15.3.5"
+    "next": "15.3.5",
+    "socket.io-client": "^4.7.4",
+    "zustand": "^4.4.7",
+    "axios": "^1.6.2",
+    "react-hook-form": "^7.48.2",
+    "react-hot-toast": "^2.4.1",
+    "lucide-react": "^0.294.0",
+    "clsx": "^2.0.0",
+    "tailwind-merge": "^2.2.0",
+    "qrcode.react": "^3.1.0",
+    "react-qr-scanner": "^1.0.0-alpha.11"
   },
   "devDependencies": {
     "typescript": "^5",
@@ -22,6 +32,7 @@
     "tailwindcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.3.5",
-    "@eslint/eslintrc": "^3"
+    "@eslint/eslintrc": "^3",
+    "@types/qrcode.react": "^1.0.5"
   }
 }

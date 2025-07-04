@@ -66,23 +66,39 @@ npm run dev
 
 ### 環境変数設定
 
-`.env.local`ファイルを作成し、以下の環境変数を設定してください：
+プロジェクトルートに`.env.local`ファイルを作成し、以下の環境変数を設定してください：
 
 ```env
-# データベース
-MONGODB_URI=your_mongodb_connection_string
+# フロントエンド設定
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+NEXT_PUBLIC_API_URL=http://localhost:3001
 
-# AWS S3
+# バックエンド設定
+PORT=3001
+NODE_ENV=development
+FRONTEND_URL=http://localhost:3000
+
+# データベース設定
+MONGODB_URI=mongodb://localhost:27017/weplay
+
+# JWT設定
+JWT_SECRET=your-super-secret-jwt-key-change-in-production
+JWT_EXPIRES_IN=7d
+
+# AWS S3設定（後で設定）
 AWS_ACCESS_KEY_ID=your_aws_access_key
 AWS_SECRET_ACCESS_KEY=your_aws_secret_key
 AWS_REGION=ap-northeast-1
-AWS_S3_BUCKET=your_s3_bucket_name
+AWS_S3_BUCKET=weplay-uploads
 
-# JWT
-JWT_SECRET=your_jwt_secret
+# ファイルアップロード設定
+MAX_FILE_SIZE=10485760 # 10MB
+ALLOWED_FILE_TYPES=image/jpeg,image/png,image/gif,video/mp4,video/quicktime
 
-# その他
-NEXT_PUBLIC_API_URL=http://localhost:3001
+# セキュリティ設定
+CORS_ORIGIN=http://localhost:3000
+RATE_LIMIT_WINDOW_MS=900000 # 15分
+RATE_LIMIT_MAX_REQUESTS=100
 ```
 
 ## プロジェクト構造
