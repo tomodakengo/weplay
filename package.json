@@ -26,7 +26,8 @@
     "test:backend": "cd backend && npm run test"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "prettier": "^3.6.2"
   },
   "keywords": [
     "baseball",
@@ -39,4 +40,4 @@
   ],
   "author": "WePlay Team",
   "license": "MIT"
-} 
+}
