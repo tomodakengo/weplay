@@ -1,14 +1,19 @@
 import { Request, Response, NextFunction } from 'express';
-import { verifyToken, JWTPayload } from '../utils/jwt';
-import User, { IUser } from '../models/User';
+import { supabaseAdmin } from '../config/supabase';
 import { CustomError } from './errorHandler';
 
 // Requestインターフェースを拡張してuserプロパティを追加
 declare global {
   namespace Express {
     interface Request {
-      user?: IUser;
-      userPayload?: JWTPayload;
+      user?: {
+        id: string;
+        email: string;
+        username?: string;
+        avatar_url?: string;
+        full_name?: string;
+      };
+      userToken?: string;
     }
   }
 }
@@ -31,20 +36,31 @@ export const authenticateToken = async (
       return next(error);
     }
 
-    // トークンを検証
-    const payload = verifyToken(token);
+    // Supabaseでトークンを検証
+    const { data: { user }, error } = await supabaseAdmin.auth.getUser(token);
     
-    // ユーザー情報をデータベースから取得
-    const user = await User.findById(payload.id);
-    if (!user) {
-      const error: CustomError = new Error('ユーザーが見つかりません');
-      error.statusCode = 401;
-      return next(error);
+    if (error || !user) {
+      const authError: CustomError = new Error('認証に失敗しました');
+      authError.statusCode = 401;
+      return next(authError);
     }
 
+    // プロフィール情報を取得
+    const { data: profile } = await supabaseAdmin
+      .from('profiles')
+      .select('username, avatar_url, full_name')
+      .eq('id', user.id)
+      .single();
+
     // リクエストオブジェクトにユーザー情報を設定
-    req.user = user;
-    req.userPayload = payload;
+    req.user = {
+      id: user.id,
+      email: user.email!,
+      username: profile?.username,
+      avatar_url: profile?.avatar_url,
+      full_name: profile?.full_name,
+    };
+    req.userToken = token;
     
     next();
   } catch (error: any) {
@@ -67,11 +83,24 @@ export const optionalAuth = async (
 
     if (token) {
       try {
-        const payload = verifyToken(token);
-        const user = await User.findById(payload.id);
-        if (user) {
-          req.user = user;
-          req.userPayload = payload;
+        const { data: { user }, error } = await supabaseAdmin.auth.getUser(token);
+        
+        if (!error && user) {
+          // プロフィール情報を取得
+          const { data: profile } = await supabaseAdmin
+            .from('profiles')
+            .select('username, avatar_url, full_name')
+            .eq('id', user.id)
+            .single();
+
+          req.user = {
+            id: user.id,
+            email: user.email!,
+            username: profile?.username,
+            avatar_url: profile?.avatar_url,
+            full_name: profile?.full_name,
+          };
+          req.userToken = token;
         }
       } catch (error) {
         // オプショナル認証では認証エラーを無視
