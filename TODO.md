@@ -5,12 +5,12 @@
 ### Phase 1: 初期セットアップ
 - [x] README.md作成
 - [x] TODO.md作成
-- [ ] プロジェクト構造設計
-- [ ] Next.jsプロジェクト初期化
-- [ ] TypeScript設定
-- [ ] Tailwind CSS設定
-- [ ] ESLint + Prettier設定
-- [ ] 基本的なディレクトリ構造作成
+- [x] プロジェクト構造設計
+- [x] Next.jsプロジェクト初期化
+- [x] TypeScript設定
+- [x] Tailwind CSS設定
+- [x] ESLint + Prettier設定
+- [x] 基本的なディレクトリ構造作成
 
 ### Phase 2: バックエンド基盤
 - [ ] Express.jsサーバー構築
