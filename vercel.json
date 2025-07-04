@@ -1,0 +1,36 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "cd frontend && npm run build",
+  "outputDirectory": "frontend/.next",
+  "installCommand": "npm ci",
+  "devCommand": "cd frontend && npm run dev",
+  "ignoreCommand": "git diff HEAD^ HEAD --quiet .",
+  "functions": {
+    "frontend/src/app/api/**/*.ts": {
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Credentials", "value": "true" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT" },
+        { "key": "Access-Control-Allow-Headers", "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version" }
+      ]
+    }
+  ],
+  "env": {
+    "NEXT_PUBLIC_API_URL": "@next_public_api_url",
+    "NEXT_PUBLIC_WS_URL": "@next_public_ws_url",
+    "NEXT_PUBLIC_GOOGLE_ANALYTICS_ID": "@next_public_google_analytics_id",
+    "NEXT_PUBLIC_SENTRY_DSN": "@next_public_sentry_dsn"
+  }
+}
