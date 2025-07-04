@@ -14,7 +14,7 @@
 
 ### Phase 2: バックエンド基盤
 - [x] Express.jsサーバー構築
-- [ ] MongoDB接続設定
+- [x] MongoDB接続設定
 - [x] Socket.io設定
 - [x] 基本的なAPIエンドポイント作成
 - [ ] 認証システム（JWT）実装
